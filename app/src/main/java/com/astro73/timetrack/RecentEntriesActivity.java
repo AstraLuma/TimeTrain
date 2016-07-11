@@ -8,6 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 
 public class RecentEntriesActivity extends AppCompatActivity {
 
@@ -26,6 +33,11 @@ public class RecentEntriesActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        ArrayAdapter<TrackEntry> adapter = new ArrayAdapter<TrackEntry>(this,
+                android.R.layout.simple_list_item_1, TrackEntry.getDummyArray());
+        ListView listView = (ListView) findViewById(R.id.listview_entries);
+        listView.setAdapter(adapter);
     }
 
     @Override
