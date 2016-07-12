@@ -11,11 +11,6 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Calendar;
-import java.util.Date;
-
 public class RecentEntriesActivity extends AppCompatActivity {
 
     @Override
@@ -34,7 +29,7 @@ public class RecentEntriesActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<TrackEntry> adapter = new ArrayAdapter<TrackEntry>(this,
+        ArrayAdapter<TrackEntry> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, TrackEntry.getDummyArray());
         ListView listView = (ListView) findViewById(R.id.listview_entries);
         listView.setAdapter(adapter);

@@ -51,12 +51,19 @@ public class TrackEntry {
                     new TrackEntry("Running", df.parse("7/11/16  8:00 AM"), df.parse("7/11/16  9:00 AM")),
                     new TrackEntry("Eating",  df.parse("7/11/16  9:00 AM"), df.parse("7/11/16 10:00 AM")),
                     new TrackEntry("Driving", df.parse("7/11/16 10:00 AM"), df.parse("7/11/16 11:00 AM")),
-                    new TrackEntry("Working", df.parse("7/11/16 11:00 AM")),
+                    new TrackEntry("Working", df.parse("7/11/16 11:00 AM"), df.parse("7/11/16 12:00 PM")),
+                    new TrackEntry("Lunch",   df.parse("7/11/16 12:00 PM"), df.parse("7/11/16  1:00 PM")),
+                    new TrackEntry("Meeting", df.parse("7/11/16  1:00 PM"), df.parse("7/11/16  2:00 PM")),
+                    new TrackEntry("Emails",  df.parse("7/11/16  2:00 PM"), df.parse("7/11/16  3:00 PM")),
+                    new TrackEntry("Napping", df.parse("7/11/16  3:00 PM"), df.parse("7/11/16  4:00 PM")),
+                    new TrackEntry("Working", df.parse("7/11/16  4:00 PM"), df.parse("7/11/16  5:00 PM")),
+                    new TrackEntry("Pretend", df.parse("7/11/16  5:00 PM"), df.parse("7/11/16  6:00 PM")),
+                    new TrackEntry("Biking",  df.parse("7/11/16  6:00 PM"), df.parse("7/11/16  7:00 PM")),
+                    new TrackEntry("Dinner",  df.parse("7/11/16  7:00 PM"), df.parse("7/11/16  8:00 PM")),
             };
         } catch (ParseException e) {
             e.printStackTrace();
-            assert(e == null);
-            return null;
+            throw new RuntimeException("Invalid hardcoded date/time format");
         }
     }
 }
