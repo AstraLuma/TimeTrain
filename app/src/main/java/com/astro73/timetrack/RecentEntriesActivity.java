@@ -23,9 +23,14 @@ public class RecentEntriesActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(final View view) {
+                (new InputDialog(RecentEntriesActivity.this) {
+                    @Override
+                    protected void on_Ok(String s) {
+                        debugToSnackbar(view, "Input: "+s);
+                    }
+                }).show();
+
             }
         });
 
@@ -54,5 +59,11 @@ public class RecentEntriesActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void debugToSnackbar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+
     }
 }
