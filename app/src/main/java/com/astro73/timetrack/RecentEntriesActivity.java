@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,13 +25,16 @@ public class RecentEntriesActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                (new InputDialog(RecentEntriesActivity.this) {
+                InputDialog dlg = (new InputDialog(RecentEntriesActivity.this) {
                     @Override
                     protected void on_Ok(String s) {
                         debugToSnackbar(view, "Input: "+s);
                     }
-                }).show();
-
+                });
+                dlg.setTitle("New Entry Name"); // TODO: Better language here.
+                // XXX: Do we also want TYPE_TEXT_VARIATION_SHORT_MESSAGE?
+                dlg.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_AUTO_CORRECT|InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+                dlg.show();
             }
         });
 

@@ -3,7 +3,6 @@ package com.astro73.timetrack;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.text.InputType;
 import android.widget.EditText;
 
 /**
@@ -59,6 +58,10 @@ public abstract class InputDialog {
      */
     public void setTitle(String title) {
         builder.setTitle(title);
+    }
+
+    public void setMessage(String msg) {
+        builder.setMessage(msg);
     }
 
     /**

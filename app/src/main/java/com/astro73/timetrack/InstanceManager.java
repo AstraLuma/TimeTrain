@@ -66,7 +66,7 @@ public class InstanceManager {
             try {
                 Database db = getDbManager().getDatabase(DATABASE);
                 for (TrackEntry te : TrackEntry.getDummyArray()) {
-                    Map<String, Object> properties = new HashMap<String, Object>();
+                    Map<String, Object> properties = new HashMap<>();
                     properties.put("_id", te.start.getTime());
                     properties.put("description", te.description);
                     properties.put("start", te.start.getTime());
