@@ -2,6 +2,7 @@ package com.astro73.timetrack;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -64,6 +65,34 @@ public class TrackEntry {
         } catch (ParseException e) {
             e.printStackTrace();
             throw new RuntimeException("Invalid hardcoded date/time format");
+        }
+    }
+
+    public static class CompareStartAscending implements Comparator<TrackEntry> {
+        @Override
+        public int compare(TrackEntry left, TrackEntry right) {
+            return left.start.compareTo(right.start);
+        }
+    }
+
+    public static class CompareStartDescending implements Comparator<TrackEntry> {
+        @Override
+        public int compare(TrackEntry left, TrackEntry right) {
+            return -left.start.compareTo(right.start);
+        }
+    }
+
+    public static class CompareEndAscending implements Comparator<TrackEntry> {
+        @Override
+        public int compare(TrackEntry left, TrackEntry right) {
+            return left.end.compareTo(right.end);
+        }
+    }
+
+    public static class CompareEndDescending implements Comparator<TrackEntry> {
+        @Override
+        public int compare(TrackEntry left, TrackEntry right) {
+            return -left.end.compareTo(right.end);
         }
     }
 }

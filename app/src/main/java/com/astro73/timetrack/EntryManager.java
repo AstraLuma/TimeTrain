@@ -1,0 +1,48 @@
+package com.astro73.timetrack;
+
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Iterator;
+
+/**
+ * Base class for various implementations
+ */
+public abstract class EntryManager {
+
+    enum Ordering {
+        WHATEVER,
+        START_OLDEST_FIRST,
+        START_YOUNGEST_FIRST,
+        END_OLDEST_FIRST,
+        END_YOUNGEST_FIRST;
+    }
+
+    public abstract Iterator<TrackEntry> getEntries(Ordering order);
+
+    public abstract void save(TrackEntry te);
+
+    /**
+     * Gets the latest open entry. That is, the entry returned will not have an end time and will have
+     * the highest start time of all entries without an end.
+     *
+     * @return
+     */
+    public abstract TrackEntry getLatestOpen();
+
+    /**
+     * Closes the latest open entry and creates a new one.
+     *
+     * The new entry is saved.
+     *
+     * @param message
+     */
+    public TrackEntry closeAndCreate(String message, Date when) {
+        // Note: This is a naive implementation. Others may want to do it differently.
+        TrackEntry cur_ent = getLatestOpen();
+        cur_ent.end = when;
+        save(cur_ent);
+        TrackEntry new_ent = new TrackEntry(message, when);
+        save(new_ent);
+        return new_ent;
+    }
+}
