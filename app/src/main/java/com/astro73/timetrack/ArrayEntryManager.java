@@ -1,5 +1,8 @@
 package com.astro73.timetrack;
 
+import android.database.AbstractCursor;
+import android.database.Cursor;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,9 +28,9 @@ public class ArrayEntryManager extends EntryManager {
     }
 
     @Override
-    public Iterator<TrackEntry> getEntries(Ordering order) {
+    public Iterable<TrackEntry> getEntries_24hr(Ordering order) {
         if (order == Ordering.WHATEVER) {
-            return mData.iterator();
+            return mData;
         }
 
         List<TrackEntry> copy = new ArrayList<>(mData);
@@ -53,16 +56,34 @@ public class ArrayEntryManager extends EntryManager {
         }
 
         Collections.sort(copy, cmp);
-        return copy.iterator();
+        return copy;
     }
 
     @Override
     public void save(TrackEntry te) {
-
+        if (mData.contains(te)) {
+            return;
+        }
+        mData.add(te);
     }
 
     @Override
     public TrackEntry getLatestOpen() {
-        return null;
+        if (mData.size() < 1) return null;
+
+        // Standard filtered max
+        TrackEntry max = mData.get(0);
+        for (TrackEntry te : mData) {
+            if (te.end != null) continue;
+            if (max.start.before(te.start))
+                max = te;
+        }
+
+        // If we fell through, we have to double check the initial value
+        if (max.end != null) {
+            return null;
+        }
+
+        return max;
     }
 }

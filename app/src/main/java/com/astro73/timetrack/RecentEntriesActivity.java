@@ -10,9 +10,17 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Iterator;
+
 public class RecentEntriesActivity extends AppCompatActivity {
+
+    private EntryManager mData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +36,8 @@ public class RecentEntriesActivity extends AppCompatActivity {
                 InputDialog dlg = (new InputDialog(RecentEntriesActivity.this) {
                     @Override
                     protected void on_Ok(String s) {
-                        debugToSnackbar(view, "Input: "+s);
+                        mData.closeAndCreate(s, new Date());
+                        refresh();
                     }
                 });
                 dlg.setTitle("New Entry Name"); // TODO: Better language here.
@@ -38,10 +47,25 @@ public class RecentEntriesActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<TrackEntry> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, TrackEntry.getDummyArray());
+        mData = new ArrayEntryManager(Arrays.asList(TrackEntry.getDummyArray()));
+
+        refresh();
+    }
+
+    private void refresh() {
+        ListAdapter adapter = new ArrayAdapter<TrackEntry>(this,
+                android.R.layout.simple_list_item_1,
+                mkArray(mData.getEntries_24hr(EntryManager.Ordering.START_YOUNGEST_FIRST)));
         ListView listView = (ListView) findViewById(R.id.listview_entries);
         listView.setAdapter(adapter);
+    }
+
+    private <T> T[] mkArray(Iterable<T> iter) {
+        ArrayList<T> rv = new ArrayList<>();
+        for (T i : iter) {
+            rv.add(i);
+        }
+        return (T[])rv.toArray();
     }
 
     @Override
